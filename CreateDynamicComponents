@@ -1,0 +1,68 @@
+<p>demo works!</p>
+<button (click)="createNewComponent()">Create a new component</button>
+
+<button (click)="removeComponent()">Remove component</button>
+
+<ng-container *ngFor="let component of componentsCount">
+  <div>{{this.districtInput}}</div>
+  <powerbi-report #powerBiReport [embedConfig]="embedConfig" ></powerbi-report>
+</ng-container>
+
+
+import { Component } from '@angular/core';
+import {PowerBIEmbedModule} from "powerbi-client-angular";
+import {IReportEmbedConfiguration} from "embed";
+import {models} from "powerbi-client";
+import {NgForOf} from "@angular/common";
+
+@Component({
+  selector: 'app-demo',
+  standalone: true,
+  imports: [
+    PowerBIEmbedModule,
+    NgForOf
+  ],
+  templateUrl: './demo.component.html',
+  styleUrl: './demo.component.css'
+})
+export class DemoComponent {
+
+  componentsCount: number[] = [];
+  districtInput = ''
+
+  embedConfig: IReportEmbedConfiguration = {
+    type: 'report',
+    id: '001cedf1-13df-4420-bad7-e976e4c24c03',
+    embedUrl: `https://app.powerbi.com/reportEmbed?reportId=001cedf1-13df-4420-bad7-e976e4c24c03&groupId=37078e78-d47f-4fbd-9d27-cc69e1e4121a&filter=CrimeCoordinatesWithPlusCode%2Fdistrito%20eq%20%27${this.districtInput}%27`,
+    accessToken:
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyIsImtpZCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyJ9.eyJhdWQiOiJodHRwczovL2FuYWx5c2lzLndpbmRvd3MubmV0L3Bvd2VyYmkvYXBpIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvMGUwY2IwNjAtMDlhZC00OWY1LWEwMDUtNjhiOWI0OWFhMWY2LyIsImlhdCI6MTcyNTU3NTY3OCwibmJmIjoxNzI1NTc1Njc4LCJleHAiOjE3MjU1ODA0NDIsImFjY3QiOjAsImFjciI6IjEiLCJhaW8iOiJBVlFBcS84WEFBQUFQdEhaREJNWGdNdklqaUV6VkIxbDJjWGtEZDdOWFNUeHkyR0UwTXUwMkhpc1FjSjlNR1dGdmRMOHRmb0gvSysvVm1pWEYyWmhtK1IrOTR5SnpraEhPNWJMK2RDRk41OG1yelZGN0dZR2xtQT0iLCJhbXIiOlsicHdkIiwibWZhIl0sImFwcGlkIjoiMjNkOGY2YmQtMWViMC00Y2MyLWEwOGMtN2JmNTI1YzY3YmNkIiwiYXBwaWRhY3IiOiIwIiwiZmFtaWx5X25hbWUiOiJZYWxpY28gUm9uY2FsIiwiZ2l2ZW5fbmFtZSI6IlJpY2FyZG8gQW5kZXJzb24iLCJpZHR5cCI6InVzZXIiLCJpcGFkZHIiOiIyMDAuMTIzLjIzMC4yNTEiLCJuYW1lIjoidTIwMTkyMDE0MCAoWWFsaWNvIFJvbmNhbCwgUmljYXJkbyBBbmRlcnNvbikiLCJvaWQiOiIzZDFiNmJiYi0wNjdmLTQxYmMtYjE3Yy00MGZiZGI1ZWQ3M2IiLCJvbnByZW1fc2lkIjoiUy0xLTUtMjEtODU4MzU0MTc4LTE3MjYzMDU4NC0xMTM2MjYzODYwLTEyNzA3NTUiLCJwdWlkIjoiMTAwMzIwMDA0NUNDRTNCMCIsInJoIjoiMC5BUVlBWUxBTURxMEo5VW1nQldpNXRKcWg5Z2tBQUFBQUFBQUF3QUFBQUFBQUFBQUdBQjAuIiwic2NwIjoiQXBwLlJlYWQuQWxsIENhcGFjaXR5LlJlYWQuQWxsIENhcGFjaXR5LlJlYWRXcml0ZS5BbGwgQ29udGVudC5DcmVhdGUgRGFzaGJvYXJkLlJlYWQuQWxsIERhc2hib2FyZC5SZWFkV3JpdGUuQWxsIERhdGFmbG93LlJlYWQuQWxsIERhdGFmbG93LlJlYWRXcml0ZS5BbGwgRGF0YXNldC5SZWFkLkFsbCBEYXRhc2V0LlJlYWRXcml0ZS5BbGwgR2F0ZXdheS5SZWFkLkFsbCBHYXRld2F5LlJlYWRXcml0ZS5BbGwgUGlwZWxpbmUuRGVwbG95IFBpcGVsaW5lLlJlYWQuQWxsIFBpcGVsaW5lLlJlYWRXcml0ZS5BbGwgUmVwb3J0LlJlYWQuQWxsIFJlcG9ydC5SZWFkV3JpdGUuQWxsIFN0b3JhZ2VBY2NvdW50LlJlYWQuQWxsIFN0b3JhZ2VBY2NvdW50LlJlYWRXcml0ZS5BbGwgVGVuYW50LlJlYWQuQWxsIFRlbmFudC5SZWFkV3JpdGUuQWxsIFVzZXJTdGF0ZS5SZWFkV3JpdGUuQWxsIFdvcmtzcGFjZS5SZWFkLkFsbCBXb3Jrc3BhY2UuUmVhZFdyaXRlLkFsbCIsInN1YiI6ImpHdFJVUEF1bkEzN0lfOUkyLUJyeTBRYWR3cFF6NENUaGkxcFBEZXJkWE0iLCJ0aWQiOiIwZTBjYjA2MC0wOWFkLTQ5ZjUtYTAwNS02OGI5YjQ5YWExZjYiLCJ1bmlxdWVfbmFtZSI6InUyMDE5MjAxNDBAdXBjLmVkdS5wZSIsInVwbiI6InUyMDE5MjAxNDBAdXBjLmVkdS5wZSIsInV0aSI6Im9vV3FVN2ttMjAyQkVJbEV1TllwQUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfaWRyZWwiOiIxIDQifQ.OxtanSyl5QZPvB5bce-jMjKNOnnMAJKtJiNUZXCGnyKDB7u8LfrpbOD_jV1v4a0nu7cFkc_pJJRRPZN-NRzuTE5LbAtiL6XEck8TQAFKde1yQka3DkM3um1rcfLuNdMHyiz5f2uveHpZ91gF8NrIzn4pQreAHahF-xhaZ4fZZm53_ESWkvh_l2iyTP4vEB3wOJuXNGklDDXRgeDbqAdeWFgdPFCT0GvCstbN4Rv-8VEHSYAqPmC6-XZJ70yqT8V53iTAwA8sldQ7dhy8CstlFXfup41IUXG4A2YDQt-BdVBA_34KsIVPxpwjwUspyELAT3AjuomGQBxAjUJr3qn3gg'
+    ,
+    tokenType: models.TokenType.Aad,
+    settings: {
+      layoutType: models.LayoutType.Custom,
+      panes: {
+        filters: {
+          expanded: false,
+          visible: false
+        },
+        visualizations:{
+          expanded: true
+        }
+      },
+      customLayout: {
+        displayOption: models.DisplayOption.ActualSize,
+      },
+    }
+  };
+
+  createNewComponent(){
+    console.log("click pressed")
+    this.componentsCount.push(0)
+    this.districtInput = 'Pueblo Libre'
+    this.embedConfig.embedUrl = `https://app.powerbi.com/reportEmbed?reportId=001cedf1-13df-4420-bad7-e976e4c24c03&groupId=37078e78-d47f-4fbd-9d27-cc69e1e4121a&filter=CrimeCoordinatesWithPlusCode%2Fdistrito%20eq%20%27${this.districtInput}%27`;
+  }
+
+  removeComponent(){
+    this.componentsCount.pop();
+  }
+}
